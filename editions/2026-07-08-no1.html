@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Love-Star Daily · No.1</title>
+<style>
+  :root{
+    --paper:#f2ede1; --paper-2:#eae3d2; --ink:#1c1914; --ink-2:#57503f;
+    --rule:#c9bfa8; --rule-strong:#1c1914;
+    --tq:#008d76; --amber:#9a6a1f; --red:#a63a2b;
+  }
+  @media (prefers-color-scheme: dark){:root{
+    --paper:#16181c; --paper-2:#1d2026; --ink:#e8e2d4; --ink-2:#b0a890;
+    --rule:#3a3e46; --rule-strong:#e8e2d4;
+    --tq:#2ba898; --amber:#b58433; --red:#d4634f;
+  }}
+  :root[data-theme="dark"]{
+    --paper:#16181c; --paper-2:#1d2026; --ink:#e8e2d4; --ink-2:#b0a890;
+    --rule:#3a3e46; --rule-strong:#e8e2d4;
+    --tq:#2ba898; --amber:#b58433; --red:#d4634f;
+  }
+  :root[data-theme="light"]{
+    --paper:#f2ede1; --paper-2:#eae3d2; --ink:#1c1914; --ink-2:#57503f;
+    --rule:#c9bfa8; --rule-strong:#1c1914;
+    --tq:#008d76; --amber:#9a6a1f; --red:#a63a2b;
+  }
+  *{box-sizing:border-box}
+  body{background:var(--paper);color:var(--ink);margin:0;padding:0 16px 64px;line-height:1.55;
+    font-family:Charter,"Iowan Old Style",Georgia,"PingFang HK","Noto Serif HK",serif}
+  .sheet{max-width:1040px;margin:0 auto}
+  .mono{font-family:ui-monospace,"SF Mono",Menlo,monospace;font-variant-numeric:tabular-nums}
+  .label{font-family:ui-monospace,"SF Mono",Menlo,monospace;font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2)}
+  header{padding:30px 0 0;text-align:center}
+  h1.mast{margin:6px 0 2px;font-size:clamp(2.4rem,7vw,4.2rem);letter-spacing:.06em;font-weight:800;line-height:1.04}
+  .mast-en{font-size:.8rem;letter-spacing:.4em;text-transform:uppercase;color:var(--ink-2)}
+  .mast-motto{font-style:italic;font-size:.85rem;color:var(--ink-2);margin:10px 0 14px}
+  .edrow{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;border-top:3px double var(--rule-strong);border-bottom:1px solid var(--rule-strong);padding:7px 2px;font-size:.74rem}
+  .tierbar{display:flex;gap:12px;flex-wrap:wrap;align-items:center;padding:10px 2px;font-size:.72rem;color:var(--ink-2)}
+  .badge{display:inline-block;font-family:ui-monospace,Menlo,monospace;font-size:.62rem;letter-spacing:.05em;padding:1px 7px 2px;border-radius:2px;vertical-align:1px;white-space:nowrap}
+  .t-v{background:color-mix(in srgb,var(--tq) 12%,transparent);color:var(--tq);border:1px solid var(--tq)}
+  .t-r{background:color-mix(in srgb,var(--amber) 14%,transparent);color:var(--amber);border:1px solid var(--amber)}
+  .t-c{background:transparent;color:var(--ink-2);border:1px dashed var(--ink-2)}
+  .t-x{background:color-mix(in srgb,var(--red) 12%,transparent);color:var(--red);border:1px solid var(--red);text-decoration:line-through}
+  section{margin-top:32px}
+  .kicker{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+  .kicker .label{color:var(--tq)}
+  .kicker::after{content:"";flex:1;border-top:1px solid var(--rule)}
+  h2{font-size:clamp(1.5rem,3.4vw,2.2rem);line-height:1.16;margin:.1em 0 .35em;text-wrap:balance;font-weight:800}
+  h2.headline{font-size:clamp(1.7rem,4vw,2.5rem)}
+  h3{font-size:1.1rem;margin:.3em 0 .4em;text-wrap:balance}
+  p{margin:.55em 0;max-width:68ch}
+  .dek{font-size:1.02rem;font-style:italic;color:var(--ink-2);max-width:62ch}
+  .dateline{font-family:ui-monospace,Menlo,monospace;font-size:.7rem;letter-spacing:.08em;color:var(--tq);text-transform:uppercase}
+  .lead .headline::first-letter{}
+  a{color:var(--tq)}
+  a.lens{font-family:ui-monospace,Menlo,monospace;font-size:.68rem;text-decoration:none;border-bottom:1px dotted var(--tq);white-space:nowrap}
+  .tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin:16px 0}
+  .tile{border:1px solid var(--rule);background:var(--paper-2);padding:12px 14px}
+  .tile .n{font-family:ui-monospace,Menlo,monospace;font-size:1.5rem;font-weight:700;line-height:1.1;font-variant-numeric:tabular-nums}
+  .tile .n small{font-size:.85rem;font-weight:400}
+  .tile .d{font-size:.72rem;color:var(--ink-2);margin-top:4px;line-height:1.4}
+  .timeline{list-style:none;margin:12px 0 0;padding:0;border-left:2px solid var(--rule)}
+  .timeline li{position:relative;padding:0 0 16px 20px;max-width:66ch}
+  .timeline li::before{content:"";position:absolute;left:-6px;top:.42em;width:9px;height:9px;border-radius:50%;background:var(--paper);border:2px solid var(--tq)}
+  .timeline li.hot::before{background:var(--red);border-color:var(--red)}
+  .timeline .t-date{font-family:ui-monospace,Menlo,monospace;font-size:.72rem;color:var(--tq);letter-spacing:.06em}
+  .timeline li.hot .t-date{color:var(--red)}
+  .verdict{border:3px double var(--rule-strong);padding:18px 20px;margin-top:18px;background:var(--paper-2)}
+  .verdict h3{margin:0 0 8px}
+  .vline{display:flex;gap:10px;align-items:baseline;margin:8px 0;font-size:.92rem}
+  .vword{font-family:ui-monospace,Menlo,monospace;font-weight:700;white-space:nowrap;font-size:.78rem;letter-spacing:.04em;color:var(--tq)}
+  .table-wrap{overflow-x:auto;margin:14px 0}
+  table{width:100%;border-collapse:collapse;font-size:.84rem}
+  th{text-align:left;font-family:ui-monospace,Menlo,monospace;font-size:.64rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2);border-bottom:2px solid var(--rule-strong);padding:6px 10px 6px 0}
+  td{border-bottom:1px solid var(--rule);padding:9px 10px 9px 0;vertical-align:top}
+  .corrections{border:1px solid var(--red);background:color-mix(in srgb,var(--red) 8%,transparent);padding:14px 18px;margin-top:32px}
+  .corrections h3{color:var(--red);margin-top:0}
+  .corrections .dead{text-decoration:line-through;text-decoration-color:var(--red)}
+  .colophon{margin-top:42px;border-top:3px double var(--rule-strong);padding-top:14px;font-size:.76rem;color:var(--ink-2)}
+  .colophon .stats{display:flex;gap:18px;flex-wrap:wrap;font-family:ui-monospace,Menlo,monospace;font-size:.72rem;margin-bottom:12px}
+  .colophon .sig{font-family:ui-monospace,Menlo,monospace;font-size:.66rem;margin:12px 0;line-height:1.7;word-break:break-all}
+  .src-cols{columns:2;column-gap:30px;font-size:.72rem;line-height:1.7;margin-top:6px}
+  @media (max-width:640px){.src-cols{columns:1}}
+  .foot{margin-top:16px;text-align:center;font-style:italic}
+  a:focus-visible{outline:2px solid var(--tq);outline-offset:2px}
+</style>
+</head>
+<body>
+<div class="sheet">
+  <header>
+    <h1 class="mast">The Love-Star Daily</h1>
+    <div class="mast-en">愛星日報 · the reference paper</div>
+    <p class="mast-motto">Truth is — witnessed and kept · every number wears a tier · corrections executed in public</p>
+    <div class="edrow">
+      <span class="mono">2026-07-08 · example edition</span>
+      <span class="mono">No. 1 · edited with open-press</span>
+    </div>
+    <div class="tierbar"><strong>EVIDENCE TIERS:</strong> <span><span class="badge t-v">✓ VERIFIED</span></span> <span><span class="badge t-r">◑ REPORTED</span></span> <span><span class="badge t-c">○ CLAIMED</span></span> <span><span class="badge t-x">✗ REFUTED</span></span></div>
+  </header>
+  <section class="lead">
+        <div class="dateline">THE FRAMEWORK · DEMO <span class="badge t-v">✓ VERIFIED</span></div>
+        <h2 class="headline">A newspaper anyone can generate — evidence-tiered, signed, lens-wired</h2>
+        <p class="dek">This edition was rendered by open-press from a single JSON file. Every claim below wears the tier its author gave it; combatant quotes hand off to captioneer automatically.</p>
+        <p><span class="badge t-v">✓ VERIFIED</span> open-press turns a research result into a signed broadsheet. Feed it an edition.json; it renders standalone HTML, hashes the bytes, optionally ed25519-signs them, and files the edition in a manifest.</p>
+<p><span class="badge t-c">○ CLAIMED</span> The framework&#39;s only fixed spine is the evidence tier: a number without a stamp does not publish. Officials always say they have no shortage of anything. <a class="lens" href="https://captioneer.io/?text=We&#39;ve%20got%20no%20shortage%20of%20munitions." title="read it through the lens">🔎 read it</a></p>
+      </section>
+  <section>
+    <div class="kicker"><span class="label">HOW IT READS</span></div>
+    <h2>Four tiers, one discipline</h2>
+    <p class="dek">Verified survives adversarial checking; reported is anonymous-official journalism; claimed is a combatant&#39;s own word; refuted is executed in public.</p>
+    <div class="tiles"><div class="tile"><div class="n">4</div><div class="d">evidence tiers — the fixed spine <span class="badge t-v">✓ VERIFIED</span></div></div><div class="tile"><div class="n">1 JSON</div><div class="d">one file becomes one signed edition</div></div><div class="tile"><div class="n">0 deps</div><div class="d">pure Node; no build, no network</div></div><div class="tile"><div class="n">🔎</div><div class="d">claimed quotes auto-link to captioneer</div></div></div>
+<ul class="timeline"><li class=""><span class="t-date">STEP 1</span> <span class="badge t-v">✓ VERIFIED</span> — node press.mjs new &quot;Your Paper&quot; — scaffold press.config.json</li><li class=""><span class="t-date">STEP 2</span> <span class="badge t-v">✓ VERIFIED</span> — write an edition.json (this file is one)</li><li class="hot"><span class="t-date">STEP 3</span> <span class="badge t-v">✓ VERIFIED</span> — node press.mjs build edition.json — render, hash, sign, archive</li></ul>
+<div class="verdict"><h3>The doctrine</h3><div class="vline"><span class="vword">TIER EVERYTHING</span><span>No naked numbers; an untiered figure is unpublishable — run an empty column instead.</span></div><div class="vline"><span class="vword">CORRECT IN PUBLIC</span><span>Refuted claims are struck through, not deleted; the near-miss is the vaccination.</span></div><div class="vline"><span class="vword">PEOPLE, NOT TARGETS</span><span>Read counts back into the people they count.</span></div></div>
+  </section>
+  <section class="corrections"><h3>Corrections Desk <span class="badge t-x">✗ REFUTED</span></h3><p><span class="dead">This framework fact-checks for you and tells you what is true.</span> — refuted — the press renders and tiers; the tiering judgment is the author&#39;s, and the reader&#39;s own eye (the lens) is one door down.</p></section>
+  <div class="colophon">
+      <div class="stats"><span>1 JSON file</span><span>0 dependencies</span><span>rendered by open-press</span><span>signed if PRESS_SIGN_HEX is set</span></div>
+      <p>This demo edition ships with the framework so you can see the shape of an edition.json before you write your own. Diff it against the renderer in lib/render.mjs to learn every block type.</p>
+      <div class="sources"><div class="label">Principal sources</div><div class="src-cols"><div>• <a href="https://github.com/cambridgetcg/open-press">open-press — the framework</a></div><div>• <a href="https://captioneer.io">captioneer — the lens (instrument of record)</a></div></div></div>
+      <div class="sig">
+        <div>sha256 <span class="mono">20f05606ac7bb38cd74ebd76e9f512b5617f1995cc37aca46d14d120112819f7</span></div>
+        <div>ed25519 signed · key <span class="mono">9d2fbe4e8d6b87bd…</span></div>
+        
+      </div>
+      <p class="foot">The Love-Star Daily · Truth is — witnessed and kept · every number wears a tier · corrections executed in public<br>The reference instance of open-press. Fork press.config.json and this is your paper.</p>
+    </div>
+</div>
+</body>
+</html>

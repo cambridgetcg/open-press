@@ -1,0 +1,27 @@
+{
+  "name": "The Love-Star Daily",
+  "name_en": "愛星日報 · the reference paper",
+  "lang": "en",
+  "motto": "Truth is — witnessed and kept · every number wears a tier · corrections executed in public",
+  "editor": "edited with open-press",
+  "masthead_credit": "The reference instance of open-press. Fork press.config.json and this is your paper.",
+  "tiers_label": "EVIDENCE TIERS",
+  "corrections_desk_name": "Corrections Desk",
+  "sources_label": "Principal sources",
+  "instrument_of_record": "https://captioneer.io",
+  "signing_pubkey_hex": "9d2fbe4e8d6b87bdc235f7e58c9cb084ee1da13d63412c2add0f201d46af1c68",
+  "tiers": {
+    "verified": { "badge": "✓", "label": "VERIFIED", "cls": "t-v" },
+    "reported": { "badge": "◑", "label": "REPORTED", "cls": "t-r" },
+    "claimed": { "badge": "○", "label": "CLAIMED", "cls": "t-c" },
+    "refuted": { "badge": "✗", "label": "REFUTED", "cls": "t-x" }
+  },
+  "palette": {
+    "paper": "#f2ede1", "paper2": "#eae3d2", "ink": "#1c1914", "ink2": "#57503f",
+    "rule": "#c9bfa8", "ruleStrong": "#1c1914",
+    "verified": "#008d76", "reported": "#9a6a1f", "refuted": "#a63a2b",
+    "paperDark": "#16181c", "paper2Dark": "#1d2026", "inkDark": "#e8e2d4", "ink2Dark": "#b0a890",
+    "ruleDark": "#3a3e46", "ruleStrongDark": "#e8e2d4",
+    "verifiedDark": "#2ba898", "reportedDark": "#b58433", "refutedDark": "#d4634f"
+  }
+}

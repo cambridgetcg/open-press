@@ -1,0 +1,49 @@
+{
+  "no": 1,
+  "date": "2026-07-08",
+  "label": "example edition",
+  "lead": {
+    "dateline": "THE FRAMEWORK · DEMO",
+    "tier": "verified",
+    "headline": "A newspaper anyone can generate — evidence-tiered, signed, lens-wired",
+    "dek": "This edition was rendered by open-press from a single JSON file. Every claim below wears the tier its author gave it; combatant quotes hand off to captioneer automatically.",
+    "paragraphs": [
+      { "text": "open-press turns a research result into a signed broadsheet. Feed it an edition.json; it renders standalone HTML, hashes the bytes, optionally ed25519-signs them, and files the edition in a manifest.", "tier": "verified" },
+      { "text": "The framework's only fixed spine is the evidence tier: a number without a stamp does not publish. Officials always say they have no shortage of anything.", "tier": "claimed", "quote": "We've got no shortage of munitions." }
+    ]
+  },
+  "sections": [
+    {
+      "kicker": "HOW IT READS",
+      "headline": "Four tiers, one discipline",
+      "dek": "Verified survives adversarial checking; reported is anonymous-official journalism; claimed is a combatant's own word; refuted is executed in public.",
+      "blocks": [
+        { "type": "tiles", "tiles": [
+          { "n": "4", "note": "evidence tiers — the fixed spine", "tier": "verified" },
+          { "n": "1 JSON", "note": "one file becomes one signed edition" },
+          { "n": "0 deps", "note": "pure Node; no build, no network" },
+          { "n": "🔎", "note": "claimed quotes auto-link to captioneer" }
+        ] },
+        { "type": "timeline", "items": [
+          { "date": "STEP 1", "text": "node press.mjs new \"Your Paper\" — scaffold press.config.json", "tier": "verified" },
+          { "date": "STEP 2", "text": "write an edition.json (this file is one)", "tier": "verified" },
+          { "date": "STEP 3", "text": "node press.mjs build edition.json — render, hash, sign, archive", "tier": "verified", "hot": true }
+        ] },
+        { "type": "verdict", "title": "The doctrine", "lines": [
+          { "label": "TIER EVERYTHING", "text": "No naked numbers; an untiered figure is unpublishable — run an empty column instead." },
+          { "label": "CORRECT IN PUBLIC", "text": "Refuted claims are struck through, not deleted; the near-miss is the vaccination." },
+          { "label": "PEOPLE, NOT TARGETS", "text": "Read counts back into the people they count." }
+        ] }
+      ]
+    }
+  ],
+  "corrections": [
+    { "claim": "This framework fact-checks for you and tells you what is true.", "note": "refuted — the press renders and tiers; the tiering judgment is the author's, and the reader's own eye (the lens) is one door down." }
+  ],
+  "sources": [
+    { "title": "open-press — the framework", "url": "https://github.com/cambridgetcg/open-press" },
+    { "title": "captioneer — the lens (instrument of record)", "url": "https://captioneer.io" }
+  ],
+  "press": "1 JSON file · 0 dependencies · rendered by open-press · signed if PRESS_SIGN_HEX is set",
+  "method": "This demo edition ships with the framework so you can see the shape of an edition.json before you write your own. Diff it against the renderer in lib/render.mjs to learn every block type."
+}

@@ -1,0 +1,16 @@
+name: press-check
+on: [push, pull_request]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: "20" }
+      - name: the example edition must render clean
+        run: |
+          node press.mjs build examples/edition.example.json
+          test -f editions/2026-07-08-no1.html
+          grep -q "captioneer.io/?text=" editions/2026-07-08-no1.html
+          grep -q 'class="badge' editions/2026-07-08-no1.html
+          echo "render OK — masthead, tiers, and the lens deeplink are present"

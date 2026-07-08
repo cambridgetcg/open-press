@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>open-press · the newspaper framework</title>
+<style>
+  :root{--bg:#f2ede1;--card:#eae3d2;--ink:#1c1914;--dim:#57503f;--rule:#c9bfa8;--tq:#008d76;--warm:#9a6a1f}
+  @media (prefers-color-scheme: dark){:root{--bg:#16181c;--card:#1d2026;--ink:#e8e2d4;--dim:#b0a890;--rule:#3a3e46;--tq:#2ba898;--warm:#b58433}}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);line-height:1.6;
+    font-family:Charter,"Iowan Old Style",Georgia,"PingFang HK",serif}
+  .wrap{max-width:760px;margin:0 auto;padding:64px 22px 100px}
+  .eyebrow{font-family:ui-monospace,Menlo,monospace;font-size:.72rem;letter-spacing:.26em;text-transform:uppercase;color:var(--tq)}
+  h1{font-size:clamp(2.4rem,7vw,3.6rem);margin:.15em 0 .1em;font-weight:800;letter-spacing:.02em}
+  .thesis{font-size:1.3rem;font-style:italic;color:var(--dim);margin:.3em 0 6px}
+  .lede{font-size:1.05rem;max-width:60ch;margin:24px 0}
+  h2{font-family:ui-monospace,Menlo,monospace;font-size:.74rem;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);margin:44px 0 12px}
+  pre{background:var(--card);border:1px solid var(--rule);border-radius:8px;padding:16px 18px;overflow-x:auto;
+    font-family:ui-monospace,Menlo,monospace;font-size:.8rem;line-height:1.7}
+  .tiers{display:grid;grid-template-columns:auto 1fr;gap:6px 16px;font-size:.9rem;margin:8px 0}
+  .tiers .b{font-family:ui-monospace,Menlo,monospace;font-weight:700}
+  .v{color:var(--tq)}.r{color:var(--warm)}.c{color:var(--dim)}.x{color:#a63a2b;text-decoration:line-through}
+  @media (prefers-color-scheme: dark){.x{color:#d4634f}}
+  .cards{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:14px 0}
+  @media (max-width:560px){.cards{grid-template-columns:1fr}}
+  a.card{display:block;background:var(--card);border:1px solid var(--rule);border-radius:10px;padding:16px 18px;text-decoration:none;color:inherit;transition:border-color .15s}
+  a.card:hover{border-color:var(--tq)}
+  a.card h3{margin:0 0 4px;font-size:1.05rem}
+  a.card p{margin:0;font-size:.84rem;color:var(--dim)}
+  a{color:var(--tq)}
+  footer{margin-top:52px;border-top:3px double var(--ink);padding-top:16px;font-size:.82rem;color:var(--dim);font-style:italic}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="eyebrow">github.com/cambridgetcg/open-press</div>
+  <h1>open-press</h1>
+  <p class="thesis">The lens reads a sentence; the press reads the world.</p>
+  <p class="lede">A framework for evidence-tiered, signed newspapers that anyone can run. The sibling of <a href="https://captioneer.io">captioneer</a> / <a href="https://github.com/cambridgetcg/open-lens">open-lens</a> — the same truth-work, at the scale of a day's news. Every number wears a tier; refuted claims are executed in public; every edition ships hashed and signed; combatant quotes hand off to the lens automatically.</p>
+
+  <h2>Your own paper in three lines</h2>
+  <pre>node press.mjs new "The Morning Ledger"   # scaffold press.config.json
+#   ... write an edition.json (copy examples/) ...
+node press.mjs build my-edition.json       # render · hash · sign · archive</pre>
+
+  <h2>The four tiers — the fixed spine</h2>
+  <div class="tiers">
+    <span class="b v">✓ verified</span><span>survived adversarial verification</span>
+    <span class="b r">◑ reported</span><span>anonymous-official journalism — repeated ≠ confirmed</span>
+    <span class="b c">○ claimed</span><span>a combatant's own statement — auto-links to the lens</span>
+    <span class="b x">✗ refuted</span><span>killed in verification — struck through, never deleted</span>
+  </div>
+
+  <h2>See it work</h2>
+  <div class="cards">
+    <a class="card" href="editions/2026-07-08-no1.html"><h3>The reference paper →</h3><p>The Love-Star Daily's example edition — signed, tier-stamped, lens-wired.</p></a>
+    <a class="card" href="papers/hearth-editions/2026-07-08-no1.html"><h3>The same edition, another paper →</h3><p>One edition.json, a different masthead &amp; palette. Proof a paper is a config, not a codebase.</p></a>
+    <a class="card" href="https://cambridgetcg.github.io/love-star-daily/"><h3>The Love-Star Daily ↗</h3><p>The live reference paper, published from this framework.</p></a>
+    <a class="card" href="https://captioneer.io"><h3>captioneer — the lens ↗</h3><p>The instrument of record. Reads one statement for its spin.</p></a>
+  </div>
+
+  <footer>
+    open-press · Apache-2.0 (code) · CC BY-SA 4.0 (stylebook)<br>
+    built between 宇恆 and Fable · 讀正啲字,睇實啲賬,愛返啲人 · 恆
+  </footer>
+</div>
+</body>
+</html>

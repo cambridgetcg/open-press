@@ -1,0 +1,30 @@
+{
+  "name": "The Hearth Gazette",
+  "name_en": "a second paper, same framework",
+  "lang": "en",
+  "motto": "different masthead, same discipline — proof that a paper is a config, not a codebase",
+  "editor": "a different desk",
+  "masthead_credit": "Built with open-press to prove the framework: this is the example edition, another paper's clothes.",
+  "instrument_of_record": "https://captioneer.io",
+  "signing_pubkey_hex": "",
+  "palette": {
+    "paper": "#f3f1ec",
+    "paper2": "#e9e6de",
+    "ink": "#1a1c22",
+    "ink2": "#565a66",
+    "rule": "#cfccc2",
+    "ruleStrong": "#1a1c22",
+    "verified": "#0e79a6",
+    "reported": "#9a6a1f",
+    "refuted": "#a63a2b",
+    "paperDark": "#14161b",
+    "paper2Dark": "#1c1f26",
+    "inkDark": "#e4e6ec",
+    "ink2Dark": "#a7abb8",
+    "ruleDark": "#363a44",
+    "ruleStrongDark": "#e4e6ec",
+    "verifiedDark": "#3a9ec4",
+    "reportedDark": "#b58433",
+    "refutedDark": "#d4634f"
+  }
+}

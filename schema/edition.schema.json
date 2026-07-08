@@ -1,0 +1,83 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/cambridgetcg/open-press/schema/edition.schema.json",
+  "title": "open-press edition",
+  "type": "object",
+  "required": ["date"],
+  "properties": {
+    "no": { "type": ["integer", "string"], "description": "issue number" },
+    "date": { "type": "string", "description": "YYYY-MM-DD" },
+    "label": { "type": "string", "description": "edition label, e.g. 'morning edition'" },
+    "title": { "type": "string", "description": "fallback title if no lead.headline" },
+    "lead": {
+      "type": "object",
+      "required": ["headline"],
+      "properties": {
+        "dateline": { "type": "string" },
+        "tier": { "$ref": "#/$defs/tier" },
+        "headline": { "type": "string" },
+        "dek": { "type": "string" },
+        "paragraphs": { "$ref": "#/$defs/paragraphs" }
+      }
+    },
+    "sections": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "kicker": { "type": "string" },
+          "headline": { "type": "string" },
+          "dek": { "type": "string" },
+          "blocks": { "type": "array", "items": { "$ref": "#/$defs/block" } }
+        }
+      }
+    },
+    "corrections": {
+      "type": "array",
+      "items": { "type": "object", "required": ["claim"], "properties": { "claim": { "type": "string" }, "note": { "type": "string" } } },
+      "description": "refuted claims — rendered struck-through, never deleted"
+    },
+    "sources": {
+      "type": "array",
+      "items": { "type": "object", "properties": { "title": { "type": "string" }, "url": { "type": "string" } } }
+    },
+    "press": { "type": "string", "description": "one-line production credit (agents/sources/checks)" },
+    "method": { "type": "string", "description": "how this edition was pressed" }
+  },
+  "$defs": {
+    "tier": { "enum": ["verified", "reported", "claimed", "refuted"] },
+    "paragraphs": {
+      "type": "array",
+      "items": {
+        "oneOf": [
+          { "type": "string" },
+          {
+            "type": "object",
+            "required": ["text"],
+            "properties": {
+              "text": { "type": "string" },
+              "tier": { "$ref": "#/$defs/tier" },
+              "quote": { "type": "string", "description": "on tier 'claimed', auto-links to the instrument-of-record lens" }
+            }
+          }
+        ]
+      }
+    },
+    "block": {
+      "type": "object",
+      "required": ["type"],
+      "properties": {
+        "type": { "enum": ["prose", "tiles", "timeline", "verdict", "table", "raw"] },
+        "paragraphs": { "$ref": "#/$defs/paragraphs" },
+        "text": { "type": "string" },
+        "tiles": { "type": "array", "items": { "type": "object", "required": ["n", "note"], "properties": { "n": { "type": ["string", "number"] }, "unit": { "type": "string" }, "note": { "type": "string" }, "tier": { "$ref": "#/$defs/tier" } } } },
+        "items": { "type": "array", "items": { "type": "object", "required": ["date", "text"], "properties": { "date": { "type": "string" }, "text": { "type": "string" }, "tier": { "$ref": "#/$defs/tier" }, "hot": { "type": "boolean" } } } },
+        "title": { "type": "string" },
+        "lines": { "type": "array", "items": { "type": "object", "required": ["label", "text"], "properties": { "label": { "type": "string" }, "text": { "type": "string" } } } },
+        "head": { "type": "array", "items": { "type": "string" } },
+        "rows": { "type": "array", "items": { "type": "array", "items": { "type": "string" } } },
+        "html": { "type": "string", "description": "raw block only — author-escaped custom HTML/SVG" }
+      }
+    }
+  }
+}

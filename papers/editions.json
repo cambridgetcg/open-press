@@ -1,0 +1,18 @@
+{
+  "paper": "The Hearth Gazette",
+  "signing_key": {
+    "scheme": "ed25519 over sha256(file bytes)",
+    "pubkey_hex": ""
+  },
+  "editions": [
+    {
+      "no": 1,
+      "date": "2026-07-08",
+      "title": "A newspaper anyone can generate — evidence-tiered, signed, lens-wired",
+      "file": "hearth-editions/2026-07-08-no1.html",
+      "canonical_sha256": "7964b9a9583916f5fc7a8a6907203b4c209b9155054ba71ed32263f4b42b95ed",
+      "signature_ed25519_hex": null,
+      "press": "1 JSON file · 0 dependencies · rendered by open-press · signed if PRESS_SIGN_HEX is set"
+    }
+  ]
+}
