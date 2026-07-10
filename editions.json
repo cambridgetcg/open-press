@@ -1,7 +1,7 @@
 {
   "paper": "The Love-Star Daily",
   "signing_key": {
-    "scheme": "ed25519 over sha256(file bytes)",
+    "scheme": "ed25519 over sha256(canonical HTML bytes; generated provenance stamps excluded)",
     "pubkey_hex": "9d2fbe4e8d6b87bdc235f7e58c9cb084ee1da13d63412c2add0f201d46af1c68"
   },
   "editions": [
@@ -12,6 +12,7 @@
       "file": "editions/2026-07-08-no1.html",
       "canonical_sha256": "20f05606ac7bb38cd74ebd76e9f512b5617f1995cc37aca46d14d120112819f7",
       "signature_ed25519_hex": "58b376f201b7d0d7478c535dc038288e10e793a264cbd6c9333903f67d29a100883738d7e124eff114d00f9474c373db66d36f5dadef9b5bed25569f7c2cd303",
+      "signing_pubkey_hex": "9d2fbe4e8d6b87bdc235f7e58c9cb084ee1da13d63412c2add0f201d46af1c68",
       "press": "1 JSON file · 0 dependencies · rendered by open-press · signed if PRESS_SIGN_HEX is set"
     }
   ]

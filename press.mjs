@@ -12,10 +12,10 @@
  *  press does the rest — render, hash, sign, archive. */
 
 import { readFileSync, writeFileSync, existsSync, mkdirSync } from "node:fs";
-import { join, dirname, basename } from "node:path";
+import { join, dirname, basename, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { render } from "./lib/render.mjs";
-import { provenance } from "./lib/sign.mjs";
+import { provenance, verifyRenderedProvenance, PROVENANCE_SCHEME } from "./lib/sign.mjs";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const args = process.argv.slice(2);
@@ -51,6 +51,32 @@ if (cmd === "new") {
   process.exit(0);
 }
 
+if (cmd === "verify") {
+  const htmlPath = args[1];
+  if (!htmlPath) {
+    console.error("usage: node press.mjs verify <edition.html> [--manifest editions.json]");
+    process.exit(1);
+  }
+  const absoluteHtmlPath = resolve(htmlPath);
+  const manifestPath = resolve(flag("--manifest", join(dirname(dirname(absoluteHtmlPath)), "editions.json")));
+  const manifest = readJSON(manifestPath);
+  const record = (manifest.editions ?? []).find((entry) => resolve(dirname(manifestPath), entry.file) === absoluteHtmlPath);
+  if (!record) {
+    console.error(`No manifest record for ${absoluteHtmlPath} in ${manifestPath}`);
+    process.exit(1);
+  }
+  const result = verifyRenderedProvenance(
+    readFileSync(absoluteHtmlPath, "utf8"),
+    record,
+    manifest.signing_key?.pubkey_hex ?? "",
+  );
+  console.log(`${result.valid ? "VERIFIED" : "FAILED"} ${htmlPath}`);
+  console.log(`  sha256: ${result.canonical_sha256}${result.hash_matches ? " (matches)" : " (MISMATCH)"}`);
+  console.log(`  colophon: ${result.hash_stamp_matches && result.signature_stamp_matches ? "matches manifest" : "MISMATCH"}`);
+  console.log(`  signature: ${result.signature_present ? (result.signature_valid ? "valid (ed25519)" : "INVALID") : "not present"}`);
+  process.exit(result.valid ? 0 : 1);
+}
+
 if (cmd === "build") {
   const editionPath = args[1];
   if (!editionPath) {
@@ -62,12 +88,15 @@ if (cmd === "build") {
   const paper = readJSON(paperPath);
   const edition = readJSON(editionPath);
 
-  // First render (no provenance) → hash the bytes → re-render with the hash
-  // and signature stamped into the colophon. The stamp does not change the
-  // hash (it is derived from the un-stamped bytes, which is what we sign).
-  const bare = render(paper, edition);
+  // Provenance fields are generated, never trusted from edition input. Render
+  // canonical bytes first, then add derived stamps which verification removes.
+  const canonicalEdition = { ...edition };
+  delete canonicalEdition.canonical_sha256;
+  delete canonicalEdition.signature_ed25519_hex;
+  delete canonicalEdition.signing_pubkey_hex;
+  const bare = render(paper, canonicalEdition);
   const prov = provenance(Buffer.from(bare, "utf8"));
-  const withProv = render(paper, { ...edition, ...prov, signing_pubkey_hex: prov.signing_pubkey_hex });
+  const withProv = render(paper, { ...canonicalEdition, ...prov, signing_pubkey_hex: prov.signing_pubkey_hex });
 
   if (!existsSync(outdir)) mkdirSync(outdir, { recursive: true });
   const slug = `${edition.date ?? "undated"}-no${edition.no ?? "x"}.html`;
@@ -78,7 +107,12 @@ if (cmd === "build") {
   const manifestPath = join(dirname(outdir), "editions.json");
   const manifest = existsSync(manifestPath)
     ? readJSON(manifestPath)
-    : { paper: paper.name, signing_key: { scheme: "ed25519 over sha256(file bytes)", pubkey_hex: prov.signing_pubkey_hex ?? paper.signing_pubkey_hex ?? "" }, editions: [] };
+    : { paper: paper.name, signing_key: { scheme: PROVENANCE_SCHEME, pubkey_hex: prov.signing_pubkey_hex ?? paper.signing_pubkey_hex ?? "" }, editions: [] };
+  manifest.signing_key = {
+    ...(manifest.signing_key ?? {}),
+    scheme: PROVENANCE_SCHEME,
+    pubkey_hex: manifest.signing_key?.pubkey_hex ?? prov.signing_pubkey_hex ?? paper.signing_pubkey_hex ?? "",
+  };
   manifest.editions = (manifest.editions ?? []).filter((e) => e.no !== edition.no || e.date !== edition.date);
   manifest.editions.unshift({
     no: edition.no,
@@ -87,6 +121,7 @@ if (cmd === "build") {
     file: join(basename(outdir), slug),
     canonical_sha256: prov.canonical_sha256,
     signature_ed25519_hex: prov.signature_ed25519_hex ?? null,
+    signing_pubkey_hex: prov.signing_pubkey_hex ?? null,
     press: edition.press ?? null,
   });
   writeFileSync(manifestPath, JSON.stringify(manifest, null, 2));
@@ -101,6 +136,7 @@ console.error(`open-press — the newspaper framework.
 
   node press.mjs new "<Paper Name>"        scaffold a press.config.json
   node press.mjs build <edition.json>      render + hash + sign + archive an edition
+  node press.mjs verify <edition.html>     verify an archived edition + signature
 
 The lens reads a sentence; the press reads the world.  https://github.com/cambridgetcg/open-press`);
 process.exit(cmd ? 1 : 0);
