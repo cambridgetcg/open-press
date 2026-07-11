@@ -19,6 +19,7 @@ the lens automatically.
 node press.mjs new "The Morning Ledger"   # scaffolds press.config.json — edit it
 #   ... write an edition.json (copy examples/edition.example.json) ...
 node press.mjs build my-edition.json       # → renders, hashes, signs, archives
+node press.mjs verify editions/DATE-noN.html # → checks the copy + signature
 ```
 
 That's the whole framework. A paper is **two kinds of file**:
@@ -70,11 +71,16 @@ pipeline, but that is one backend, not a requirement.)
 
 ## Provenance
 
-`node press.mjs build` writes the canonical sha256 into every edition's colophon
-and its `editions.json` entry. Set `PRESS_SIGN_HEX` (a 32-byte ed25519 seed, hex)
-to also ed25519-sign the bytes — no key ever touches disk. A signed edition can
-be anchored on a public chain (the reference paper anchors its hashes on
-zerone-testnet-1) so a copy that fails verification is not an edition.
+`node press.mjs build` hashes the canonical HTML, then writes that sha256 into
+the edition's colophon and its `editions.json` entry. The generated hash and
+signature colophon elements are explicitly excluded from the canonical bytes
+(a file cannot contain its own digest); `node press.mjs verify` removes exactly
+those generated elements, checks the colophon against the manifest, recomputes
+the digest, and verifies any signature. Set `PRESS_SIGN_HEX` (a 32-byte ed25519
+seed, hex) to ed25519-sign the digest — no key ever touches disk. Each signed
+manifest entry records its own public key so key rotation remains verifiable.
+A digest can be anchored on a public chain (the reference paper anchors its
+hashes on zerone-testnet-1) so a copy that fails verification is not an edition.
 
 ---
 
